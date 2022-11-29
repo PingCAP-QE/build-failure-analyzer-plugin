@@ -12,9 +12,16 @@ import java.util.SortedSet;
 
 public final class MetricsManager {
     static final String CAUSEPREFIX = "jenkins_bfa.cause.";
+    static final String JOBCAUSEPREFIX = "jenkins_bfa.job_cause.";
     static final String CATEGORYPREFIX = "jenkins_bfa.category.";
+    static final String JOBCATEGORYPREFIX = "jenkins_bfa.job_category.";
 
-    /**A magic cause to represent builds that match no causes in the database. */
+    static final String SLASHREPLACER = "___";
+    static final String FIELDSEPERATOR = "____";
+
+    /**
+     * A magic cause to represent builds that match no causes in the database.
+     */
     public static final FailureCause UNKNOWNCAUSE = new FailureCause("no matching cause", "");
 
     private MetricsManager() {
@@ -27,6 +34,20 @@ public final class MetricsManager {
         if (categoriesForCause != null) {
             for (String string : categoriesForCause) {
                 metrics.add(CATEGORYPREFIX + string);
+            }
+        }
+        return metrics;
+    }
+
+    private static Set<String> getMetricNames(IFailureCauseMetricData cause, String jobName) {
+        Set<String> metrics = new HashSet<String>();
+        metrics.add(CAUSEPREFIX + cause.getName());
+        metrics.add(JOBCAUSEPREFIX + jobName.replace("/", SLASHREPLACER) + FIELDSEPERATOR + cause.getName());
+        List<String> categoriesForCause = cause.getCategories();
+        if (categoriesForCause != null) {
+            for (String string : categoriesForCause) {
+                metrics.add(CATEGORYPREFIX + string);
+                metrics.add(JOBCATEGORYPREFIX + jobName.replace("/", SLASHREPLACER) + FIELDSEPERATOR + string);
             }
         }
         return metrics;
@@ -50,7 +71,8 @@ public final class MetricsManager {
 
     /**
      * Increment counters for the metric and its categories.
-     * @param causes The cause to increment counters for
+     *
+     * @param causes       The cause to increment counters for
      * @param squashCauses Whether or not to squash cause metrics
      */
     public static void incCounters(List<? extends IFailureCauseMetricData> causes, boolean squashCauses) {
@@ -66,6 +88,35 @@ public final class MetricsManager {
         } else {
             for (IFailureCauseMetricData cause : causes) {
                 Set<String> metrics = getMetricNames(cause);
+                for (String metric : metrics) {
+                    metricRegistry.counter(metric).inc();
+                }
+            }
+        }
+    }
+
+    /**
+     * Increment counters for the metric and its categories with job name.
+     *
+     * @param causes       The cause to increment counters for
+     * @param squashCauses Whether or not to squash cause metrics
+     * @param jobName      the job full name
+     */
+    public static void incCounters(List<? extends IFailureCauseMetricData> causes,
+                                   boolean squashCauses,
+                                   String jobName) {
+        MetricRegistry metricRegistry = Metrics.metricRegistry();
+        if (squashCauses) {
+            Set<String> metrics = new HashSet<>();
+            for (IFailureCauseMetricData cause : causes) {
+                metrics.addAll(getMetricNames(cause, jobName));
+            }
+            for (String metric : metrics) {
+                metricRegistry.counter(metric).inc();
+            }
+        } else {
+            for (IFailureCauseMetricData cause : causes) {
+                Set<String> metrics = getMetricNames(cause, jobName);
                 for (String metric : metrics) {
                     metricRegistry.counter(metric).inc();
                 }

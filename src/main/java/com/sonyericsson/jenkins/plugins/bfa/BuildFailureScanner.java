@@ -219,11 +219,16 @@ public class BuildFailureScanner extends RunListener<Run> {
 
 
            if (!foundCauseList.isEmpty()) {
-               incCounters(foundCauseList, PluginImpl.getInstance().isMetricSquashingEnabled());
+               incCounters(
+                       foundCauseList,
+                       PluginImpl.getInstance().isMetricSquashingEnabled(),
+                       build.getParent().getFullName()
+               );
            } else {
                incCounters(
                    new ArrayList<>(Collections.singletonList(UNKNOWNCAUSE)),
-                   PluginImpl.getInstance().isMetricSquashingEnabled()
+                   PluginImpl.getInstance().isMetricSquashingEnabled(),
+                   build.getParent().getFullName()
                 );
            }
 
