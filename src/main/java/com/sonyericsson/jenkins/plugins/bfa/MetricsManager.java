@@ -12,12 +12,14 @@ import java.util.SortedSet;
 
 public final class MetricsManager {
     static final String CAUSEPREFIX = "jenkins_bfa.cause.";
-    static final String JOBCAUSEPREFIX = "jenkins_bfa.job_cause.";
-    static final String CATEGORYPREFIX = "jenkins_bfa.category.";
-    static final String JOBCATEGORYPREFIX = "jenkins_bfa.job_category.";
 
-    static final String SLASHREPLACER = "___";
-    static final String FIELDSEPERATOR = "____";
+    static final String CATEGORYPREFIX = "jenkins_bfa.category.";
+
+    static final String SLASHREPLACER = ":_";
+    static final String FIELDSEPERATOR = "::";
+    static final String COMMAREPLACER = ":c";
+    static final String JOBCAUSEPREFIX = "jenkins_bfa.job_cause" + FIELDSEPERATOR;
+    static final String JOBCATEGORYPREFIX = "jenkins_bfa.job_category" + FIELDSEPERATOR;
 
     /**
      * A magic cause to represent builds that match no causes in the database.
@@ -42,15 +44,19 @@ public final class MetricsManager {
     private static Set<String> getMetricNames(IFailureCauseMetricData cause, String jobName) {
         Set<String> metrics = new HashSet<String>();
         metrics.add(CAUSEPREFIX + cause.getName());
-        metrics.add(JOBCAUSEPREFIX + jobName.replace("/", SLASHREPLACER) + FIELDSEPERATOR + cause.getName());
+        metrics.add(JOBCAUSEPREFIX + normalize(jobName) + FIELDSEPERATOR + cause.getName());
         List<String> categoriesForCause = cause.getCategories();
         if (categoriesForCause != null) {
             for (String string : categoriesForCause) {
                 metrics.add(CATEGORYPREFIX + string);
-                metrics.add(JOBCATEGORYPREFIX + jobName.replace("/", SLASHREPLACER) + FIELDSEPERATOR + string);
+                metrics.add(JOBCATEGORYPREFIX + normalize(jobName) + FIELDSEPERATOR + normalize(string));
             }
         }
         return metrics;
+    }
+
+    private static String normalize(String s){
+        return s.replace(":", COMMAREPLACER).replace("/", SLASHREPLACER);
     }
 
     /**
