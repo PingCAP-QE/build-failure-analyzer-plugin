@@ -15,8 +15,8 @@ public final class MetricsManager {
 
     static final String CATEGORYPREFIX = "jenkins_bfa.category.";
 
-    static final String SLASHREPLACER = ":_";
-    static final String FIELDSEPERATOR = "::";
+    static final String SLASHREPLACER = "::";
+    static final String FIELDSEPERATOR = ":_:";
     static final String COMMAREPLACER = ":c";
     static final String JOBCAUSEPREFIX = "jenkins_bfa.job_cause" + FIELDSEPERATOR;
     static final String JOBCATEGORYPREFIX = "jenkins_bfa.job_category" + FIELDSEPERATOR;
