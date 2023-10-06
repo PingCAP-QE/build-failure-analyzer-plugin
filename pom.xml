@@ -10,13 +10,13 @@
     <parent>
         <groupId>org.jenkins-ci.plugins</groupId>
         <artifactId>plugin</artifactId>
-        <version>4.40</version>
+        <version>4.67</version>
     </parent>
 
     <properties>
-        <revision>2.4.1</revision>
+        <revision>2.4.3</revision>
         <changelist>-SNAPSHOT</changelist>
-        <jenkins.version>2.289.3</jenkins.version>
+        <jenkins.version>2.375.3</jenkins.version>
         <checkstyle.version>3.1.1</checkstyle.version>
         <no-test-jar>false</no-test-jar>
     </properties>
@@ -76,82 +76,20 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-jdk14</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.sonyericsson.hudson.plugins.gerrit</groupId>
             <artifactId>gerrit-trigger</artifactId>
-            <version>2.35.0</version>
+            <version>2.39.0</version>
             <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.sf.json-lib</groupId>
-                    <artifactId>json-lib</artifactId>
-                </exclusion>
-                <exclusion>
-                    <!-- Provided by the plugin -->
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-annotations</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.jenkins-ci.plugins/slack -->
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>slack</artifactId>
-            <version>2.30</version>
             <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <!-- Provided by the plugin -->
-                    <groupId>org.apache.httpcomponents</groupId>
-                    <artifactId>httpclient</artifactId>
-                </exclusion>
-                <exclusion>
-                    <!-- Provided by the plugin -->
-                    <groupId>org.jenkins-ci.plugins</groupId>
-                    <artifactId>credentials</artifactId>
-                </exclusion>
-                <!-- jackson deps come from jackson2-api plugin instead -->
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-databind</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>jackson-annotations</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>token-macro</artifactId>
-            <version>293.v283932a_0a_b_49</version>
             <optional>true</optional>
         </dependency>
         <dependency>
@@ -213,14 +151,13 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.12.0</version>
+            <groupId>io.jenkins.plugins</groupId>
+            <artifactId>commons-lang3-api</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
-            <version>3.8.0</version>
+            <version>3.9.0</version>
         </dependency>
         <dependency>
             <groupId>com.axis.system.jenkins.plugins.downstream</groupId>
@@ -273,14 +210,8 @@
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>parameterized-trigger</artifactId>
             <scope>test</scope>
-            <version>2.18</version>
+            <version>2.45</version>
             <optional>true</optional>
-            <exclusions>
-                <exclusion>
-                    <groupId>net.sf.json-lib</groupId>
-                    <artifactId>json-lib</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
@@ -324,12 +255,12 @@
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
-            <artifactId>mockito-inline</artifactId>
+            <artifactId>mockito-core</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
+            <artifactId>hamcrest</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -346,37 +277,17 @@
         <dependency>
             <groupId>org.jenkins-ci.plugins</groupId>
             <artifactId>metrics</artifactId>
-            <version>4.0.2.8.1</version>
+            <version>4.2.18-439.v86a_20b_a_8318b_</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>io.jenkins.tools.bom</groupId>
-                <artifactId>bom-2.289.x</artifactId>
-                <version>1289.v5c4b_1c43511b_</version>
+                <artifactId>bom-2.375.x</artifactId>
+                <version>2179.v0884e842b_859</version>
                 <scope>import</scope>
                 <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>org.json</groupId>
-                <artifactId>json</artifactId>
-                <version>20211205</version>
-            </dependency>
-            <dependency>
-                <groupId>joda-time</groupId>
-                <artifactId>joda-time</artifactId>
-                <version>2.10.2</version>
-            </dependency>
-            <dependency>
-                <groupId>com.google.code.gson</groupId>
-                <artifactId>gson</artifactId>
-                <version>2.8.9</version>
-            </dependency>
-            <dependency>
-                <groupId>net.java.dev.jna</groupId>
-                <artifactId>jna-platform</artifactId>
-                <version>5.8.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -427,18 +338,10 @@
                 </executions>
             </plugin>
         </plugins>
-        <extensions>
-            <extension>
-                <groupId>org.jvnet.wagon-svn</groupId>
-                <artifactId>wagon-svn</artifactId>
-                <version>1.9</version>
-            </extension>
-        </extensions>
     </build>
     <scm>
-        <connection>scm:git:ssh://github.com/jenkinsci/build-failure-analyzer-plugin.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com/jenkinsci/build-failure-analyzer-plugin.git
-        </developerConnection>
+        <connection>scm:git:https://github.com/jenkinsci/build-failure-analyzer-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:jenkinsci/build-failure-analyzer-plugin.git</developerConnection>
         <url>https://github.com/jenkinsci/build-failure-analyzer-plugin</url>
         <tag>${scmTag}</tag>
     </scm>
@@ -454,16 +357,6 @@
                     <suppressionsFileExpression>checkstyle.suppressions.file</suppressionsFileExpression>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <!--<failsOnError>true</failsOnError>-->
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>findbugs-maven-plugin</artifactId>
-                <configuration>
-                    <xmlOutput>true</xmlOutput>
-                    <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
-                    <!-- Optional directory to put findbugs xdoc xml report -->
-                    <!--<xmlOutputDirectory>target/site</xmlOutputDirectory>-->
                 </configuration>
             </plugin>
         </plugins>

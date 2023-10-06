@@ -12,7 +12,6 @@ import java.util.SortedSet;
 
 public final class MetricsManager {
     static final String CAUSEPREFIX = "jenkins_bfa.cause.";
-
     static final String CATEGORYPREFIX = "jenkins_bfa.category.";
 
     static final String SLASHREPLACER = "::";
@@ -21,9 +20,7 @@ public final class MetricsManager {
     static final String JOBCAUSEPREFIX = "jenkins_bfa.job_cause" + FIELDSEPERATOR;
     static final String JOBCATEGORYPREFIX = "jenkins_bfa.job_category" + FIELDSEPERATOR;
 
-    /**
-     * A magic cause to represent builds that match no causes in the database.
-     */
+    /**A magic cause to represent builds that match no causes in the database. */
     public static final FailureCause UNKNOWNCAUSE = new FailureCause("no matching cause", "");
 
     private MetricsManager() {
@@ -77,8 +74,7 @@ public final class MetricsManager {
 
     /**
      * Increment counters for the metric and its categories.
-     *
-     * @param causes       The cause to increment counters for
+     * @param causes The cause to increment counters for
      * @param squashCauses Whether or not to squash cause metrics
      */
     public static void incCounters(List<? extends IFailureCauseMetricData> causes, boolean squashCauses) {

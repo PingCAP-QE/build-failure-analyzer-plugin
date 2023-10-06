@@ -24,12 +24,12 @@
 
 package com.sonyericsson.jenkins.plugins.bfa;
 
-import com.gargoylesoftware.htmlunit.html.DomNode;
-import com.gargoylesoftware.htmlunit.html.HtmlElement;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlSelect;
-import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
+import org.htmlunit.html.DomNode;
+import org.htmlunit.html.HtmlElement;
+import org.htmlunit.html.HtmlForm;
+import org.htmlunit.html.HtmlPage;
+import org.htmlunit.html.HtmlSelect;
+import org.htmlunit.html.HtmlTextInput;
 import com.sonyericsson.jenkins.plugins.bfa.db.KnowledgeBase;
 import com.sonyericsson.jenkins.plugins.bfa.db.LocalFileKnowledgeBase;
 import com.sonyericsson.jenkins.plugins.bfa.db.MongoDBKnowledgeBase;
@@ -289,7 +289,7 @@ public class PluginImplHudsonTest {
         //Check that the select box has the correct value
         HtmlElement element = getStorageTypeRow(page);
         assertNotNull("Should have found the base div", element);
-        HtmlElement settingsMainElement = element.getOneHtmlElementByAttribute("div", "class", "setting-main");
+        HtmlElement settingsMainElement = element.getOneHtmlElementByAttribute("div", "class", "jenkins-select");
         HtmlSelect select = (HtmlSelect)settingsMainElement.getChildElements().iterator().next();
         assertEquals(knowledgeBase.getDescriptor().getDisplayName(), select.getSelectedOptions().get(0).getText());
 
@@ -310,7 +310,7 @@ public class PluginImplHudsonTest {
      */
     private HtmlElement getStorageTypeRow(HtmlPage page) {
         List<HtmlElement> elements = page.getDocumentElement().getElementsByAttribute(
-                "div", "class", "setting-name help-sibling");
+                "div", "class", "jenkins-form-label help-sibling");
         for (HtmlElement element : elements) {
             if ("Storage type".equals(StringUtils.trim(element.getTextContent()))) {
                 return element.getEnclosingElement("div");
